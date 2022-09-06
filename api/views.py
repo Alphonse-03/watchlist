@@ -9,7 +9,6 @@ from rest_framework import status
 
 @api_view(['GET','POST'])
 def home(request):
-
     if request.method == 'GET':
         movies=Movie.objects.all()
         serializer=MovieSerializer(movies,many=True)
@@ -23,6 +22,17 @@ def home(request):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+
+@api_view(['GET'])
+def movies(request,pk):
+    if request.method == 'GET':
+        movies=Movie.objects.filter(director=pk)
+        serializer=MovieSerializer(movies,many=True)
+        return Response(serializer.data)
+
+   
+
 
 
 @api_view(['GET','PUT','DELETE'])

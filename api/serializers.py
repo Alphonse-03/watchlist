@@ -6,6 +6,9 @@ class MovieSerializer(serializers.Serializer):
     name=serializers.CharField()
     description= serializers.CharField()
     viewed = serializers.BooleanField()
+    director = serializers.CharField()
+    rating = serializers.IntegerField()
+    urls = serializers.URLField()
 
     def create(self,validated_data):
         return Movie.objects.create(**validated_data)
