@@ -1,11 +1,52 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from api.serializers import MovieSerializer
-from api.models import Movie
+from api.serializers import MovieSerializer,StreamPlatformSerializer
+from api.models import Movie,StreamPlatform
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 # Create your views here.
+
+
+# @api_view(['GET','POST'])
+# def stream(request):
+#     if request.method == 'GET':
+#         movies=StreamPlatform.objects.all()
+#         serializer=StreamPlatformSerializer(movies,many=True)
+
+#         return Response(serializer.data)
+
+#     if request.method == 'POST':
+#         serializer=StreamPlatformSerializer(data=request.data)
+        
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data)
+#         else:
+#             return Response(serializer.errors)
+
+
+class Stream(APIView):
+  
+    def get(self, request, format=None):
+        movies=StreamPlatform.objects.all()
+        serializer=StreamPlatformSerializer(movies,many=True)
+        return Response(serializer.data)
+
+
+    def post(self, request, format=None):
+        serializer=StreamPlatformSerializer(data=request.data)      
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+       
+
+
+
+
 
 @api_view(['GET','POST'])
 def home(request):
